@@ -18,5 +18,7 @@ namespace HC_MIS.Data
         public string DistrictName { get; set; }
         public string TehsilCode { get; set; }
         public string TehsilName { get; set; }
+        public string HFTypeCode { get; set; }
+        public string HFTypeName { get; set; }
     }
 }

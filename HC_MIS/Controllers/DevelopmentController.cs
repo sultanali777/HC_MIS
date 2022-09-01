@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HC_MIS.Data;
 using HC_MIS.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HC_MIS.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class DevelopmentController : ControllerBase
