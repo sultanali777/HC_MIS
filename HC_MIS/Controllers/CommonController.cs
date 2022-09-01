@@ -123,7 +123,13 @@ namespace HC_MIS.Controllers
         [Route("Tehsils")]
         public async Task<ActionResult<IEnumerable<Hflist>>> GetTehsils()
         {
-            return await Context.HFList.ToListAsync();
+            var resultsGroupings = Context.HFList.GroupBy(r => new { r.TehsilCode, r.TehsilName, r.DistrictCode })
+                .Select(r => new
+                {
+                    Code = r.Key.TehsilCode,
+                    Name = r.Key.TehsilName
+                });
+            return Ok(resultsGroupings);
         }
     }
 }
