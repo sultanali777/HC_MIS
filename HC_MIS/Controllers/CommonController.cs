@@ -64,7 +64,7 @@ namespace HC_MIS.Controllers
         {
 
             var resultsGroupings = Context.HFList.GroupBy(r => new { r.DivisionCode, r.DivisionName })
-                                    .Select(r => new DivisionsModel
+                                    .Select(r => new
                                     {
                                         Code = r.Key.DivisionCode,
                                         Name = r.Key.DivisionName
@@ -85,7 +85,7 @@ namespace HC_MIS.Controllers
         {
             var resultsGroupings = Context.HFList.GroupBy(r => new { r.DistrictCode, r.DistrictName, r.DivisionCode })
                 .Where(a => a.Key.DivisionCode == code)
-                .Select(r => new DivisionsModel
+                .Select(r => new
                 {
                     Code = r.Key.DistrictCode,
                     Name = r.Key.DistrictName
@@ -100,7 +100,7 @@ namespace HC_MIS.Controllers
         {
             var resultsGroupings = Context.HFList.GroupBy(r => new { r.TehsilCode, r.TehsilName, r.DistrictCode })
                 .Where(a => a.Key.DistrictCode == code)
-                .Select(r => new DivisionsModel
+                .Select(r => new
                 {
                     Code = r.Key.TehsilCode,
                     Name = r.Key.TehsilName
@@ -112,7 +112,7 @@ namespace HC_MIS.Controllers
         public async Task<ActionResult<IEnumerable<Hflist>>> GetFacilityTypes()
         {
             var resultsGroupings = Context.HFList.GroupBy(r => new { r.HFTypeCode, r.HFTypeName })
-                .Select(r => new DivisionsModel
+                .Select(r => new
                 {
                     Code = r.Key.HFTypeCode,
                     Name = r.Key.HFTypeName
