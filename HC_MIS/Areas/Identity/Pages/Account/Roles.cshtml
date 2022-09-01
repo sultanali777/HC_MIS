@@ -1,0 +1,52 @@
+﻿@page
+@model HC_MIS.Areas.Identity.Pages.Account.RolesModel
+@{
+    Layout = "~/Views/Shared/AdminLTE/_Layout.cshtml";
+}
+<div>
+    <h4>Roles Manager</h4>
+    <form method="post">
+        <div class="input-group col-4" style="padding:0px;">
+            <input autocomplete="off" name="roleName" type="text" class="form-control">
+            <span class="input-group-append">
+                <button type="submit" class="btn btn-success">Add New Role</button>
+            </span>
+        </div>
+    </form>
+    <br />
+    <table class="table table-striped" id="roleTable">
+        <thead>
+            <tr>
+                <th>
+                    Role
+                </th>
+                <th>
+                    Id
+                </th>
+
+                <th style="width:30%">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var role in Model.Roles)
+            {
+                <tr>
+                    <td>
+                        @role.Name
+                    </td>
+                    <td>
+                        @role.Id
+                    </td>
+                    <td>
+                        <a style='margin-right:16px' asp-controller="Permission" asp-action="Index" asp-route-roleId="@role.Id" class="btn btn-success">
+                            <i class="fas fa-wrench"></i> Permissions
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

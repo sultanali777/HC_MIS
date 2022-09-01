@@ -1,0 +1,3 @@
+Scaffold-DbContext "Server=172.16.15.5;User Id=zubair;Password=asd@123;Database=HMIS_DB;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Data -Tables HFList -f
+
+  

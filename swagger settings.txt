@@ -1,0 +1,107 @@
+How to setup Asp.net core web api.
+
+1. Create Project Asp.net core web api.
+
+2. Install-Package from Nuget Package Manager.
+
+	- Microsoft Entity Framework CORE SQL SERVER
+	- Microsoft Entity Framework CORE TOOLS
+
+3. Run this command in Package Manager Console.
+
+Scaffold-DbContext "Data Source=Rana;Initial Catalog=CrudApp;Integrated Security=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
+Scaffold-DbContext "Data Source=DESKTOP-8NHK0O0;Initial Catalog=Practice;Integrated Security=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
+
+
+4. Add same connection string in appsettings.json.
+"ConnectionStrings":
+{"Appcon": "Data Source=Rana;Initial Catalog=CrudApp;Integrated Security=True;"},
+
+5. Add services in Startup.cs.
+services.AddDbContext<CrudAppContext>(db => db.UseSqlServer(Configuration.GetConnectionString("AppCon")));
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How to active cors policy.
+
+1. Add in startup.cs services.
+services.AddCors(cors => cors.AddPolicy("MyPolicy", builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();}));
+
+2. After app.UseRouting(); add.
+app.UseCors("MyPolicy");
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How to install Swagger.
+
+1. Install-Package Swashbuckle.Aspnetcore.
+2. In Startup.cs file.
+
+In the ConfigureServices() method add.
+   services.AddSwaggerGen();
+
+In the Configure() method add.
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Employee API V1");
+    });
+
+3. Run this command in Package Manager Console.
+install-package Swashbuckle.AspNetCore
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+FOR FURTHER DOUCMENTATION: https://code-maze.com/authentication-aspnetcore-jwt-1/
+
+How to Configure JWT Authentication.
+
+1. Install-Package Microsoft.AspNetCore.Authentication.JwtBearer.
+
+2. In Startup.cs file.
+
+In the ConfigureServices() method add.
+
+services.AddAuthentication(opt => {
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "https://localhost:5001",
+            ValidAudience = "https://localhost:5001",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
+        };
+    });
+
+Include directives.
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+In the Configure() method add above app.UseAuthorization();.
+
+app.UseAuthentication();
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Scaffold-DbContext "Server=172.16.16.15;Database=Punjab_Pharmacy_Council;User Id=waseem;Password=asd@123" Microsoft.EntityFrameworkCore.SqlServer -OutputDir DbModels -Force
+
+
+optionsBuilder.UseSqlServer(new AppConfiguration().ConnectionString);
+
+
+ modelBuilder.Entity<TotalRecords>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
