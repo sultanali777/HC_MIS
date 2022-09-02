@@ -33,6 +33,7 @@ namespace HC_MIS.Controllers
                 UserName = model.UserName,
                 Email = model.Email,
                 FirstName = model.FirstName
+
             };
 
             try

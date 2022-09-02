@@ -40,7 +40,7 @@ namespace HC_MIS.Controllers
         {
             return await Context.HFList.Where(x => x.DistrictCode == code).ToListAsync();
         }
-        [HttpPost]
+        [HttpGet]
         [Route("FacilitiesByTehsils")]
         public async Task<ActionResult<IEnumerable<Hflist>>> GetFacilitiesByTehsils(string code)
         {
@@ -79,7 +79,7 @@ namespace HC_MIS.Controllers
         {
             return await Context.Districts.ToListAsync();
         }
-        [HttpPost]
+        [HttpGet]
         [Route("DistrictsByDivision")]
         public async Task<ActionResult<IEnumerable<Hflist>>> GetDivDistricts(string code)
         {
@@ -94,7 +94,7 @@ namespace HC_MIS.Controllers
 
             return Ok(resultsGroupings);
         }
-        [HttpPost]
+        [HttpGet]
         [Route("TehsilsByDistrict")]
         public async Task<ActionResult<IEnumerable<Hflist>>> GetDisTehsils(string code)
         {
