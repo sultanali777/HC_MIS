@@ -119,6 +119,31 @@ namespace HC_MIS.Controllers
                 });
             return Ok(resultsGroupings);
         }
+
+
+        //[HttpPost]
+        //[Route("FacilityTypesbyTehsil")]
+        //public async Task<ActionResult<IEnumerable<Hflist>>> GetFacilityTypebyTehsil()
+        //{
+        //    var resultsGroupings = Context.HFList.GroupBy(r => new { r.HFTypeCode, r.HFTypeName,r.})
+        //        .Select(r => new
+        //        {
+        //            Code = r.Key.HFTypeCode,
+        //            Name = r.Key.HFTypeName,
+        //            //code=r.Key.TehsilCode
+        //        });
+        //    return Ok(resultsGroupings);
+        //}
+        [HttpPost]
+        [Route("FacilitiesTypeByTehsil")]
+        public async Task<ActionResult<IEnumerable<Hflist>>> GetFacilityTypeByTehsil(string code)
+        {
+            return await Context.HFList.Where(x => x.TehsilCode == code).ToListAsync();
+        }
+
+
+
+
         [HttpGet]
         [Route("Tehsils")]
         public async Task<ActionResult<IEnumerable<Hflist>>> GetTehsils()

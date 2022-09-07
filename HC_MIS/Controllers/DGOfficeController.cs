@@ -44,6 +44,63 @@ namespace HC_MIS.Controllers
             return hc_dgoffice;
         }
 
+
+        [HttpPost]
+        [Route("DevelopmentBudget")]
+        public async Task<ActionResult<IEnumerable<hc_dgoffice>>> GetDevelopmentBudget()
+        {
+
+            var resultsGroupings = _context.hc_dgoffice.GroupBy(r => new { r.release_amount, r.hf_code, r.date_entry })
+                .Select(r => new
+                {
+                    Code = r.Key.hf_code,
+                    Amount = r.Key.release_amount,
+                    DateTime = r.Key.date_entry,
+                });
+            return Ok(resultsGroupings);
+
+            //var Yoo = data.Select(x => new { x.Id, x.LetterNo, x.Name, x.Cnic, x.DesignationAppliedFor, x.IssueDate, DivisionName = x.HealthFacility != null ? x.HealthFacility.DivisionName : "", DistrictName = x.HealthFacility != null ? x.HealthFacility.DistrictName : "", TehsilName = x.HealthFacility != null ? x.HealthFacility.TehsilName : "", x.FinalReport }).ToList();
+        }
+
+
+        [HttpPost]
+        [Route("DGDetailsSave")]
+        public async Task<ActionResult<hc_dgoffice>> DGDATASAVE(hc_dgoffice hc_Dgoffice)
+        {
+
+          
+            _context.Add(hc_Dgoffice);
+            await _context.SaveChangesAsync();
+
+
+
+            hc_hfAcknowledge obj = new hc_hfAcknowledge();
+            obj.hf_code = hc_Dgoffice.hf_code;
+            obj.cheque_no = hc_Dgoffice.cheque_no;
+            obj.received_amount = hc_Dgoffice.release_amount;
+            obj.DGOffice_Id = hc_Dgoffice.Id;
+
+
+
+
+            _context.Add(obj);
+            await _context.SaveChangesAsync();
+
+
+            return Ok();
+
+            //return Ok();
+
+            //var Yoo = data.Select(x => new { x.Id, x.LetterNo, x.Name, x.Cnic, x.DesignationAppliedFor, x.IssueDate, DivisionName = x.HealthFacility != null ? x.HealthFacility.DivisionName : "", DistrictName = x.HealthFacility != null ? x.HealthFacility.DistrictName : "", TehsilName = x.HealthFacility != null ? x.HealthFacility.TehsilName : "", x.FinalReport }).ToList();
+        }
+
+
+
+
+
+
+
+
         // PUT: api/DGOffice/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

@@ -15,6 +15,8 @@ namespace HC_MIS.Models
         public string cheque_no { get; set; }
         public int statusId { get; set; }
         public DateTime received_date { get; set; }
+        public int? DGOffice_Id { get; set; }
+
         public DateTime date_entry
         {
             get

@@ -86,6 +86,121 @@ namespace HC_MIS.Controllers
             return CreatedAtAction("Gethc_hfAcknowledge", new { id = hc_hfAcknowledge.Id }, hc_hfAcknowledge);
         }
 
+
+        [HttpPost]
+        [Route("IssueCheque")]
+        public async Task<ActionResult<IEnumerable<hc_hfAcknowledge>>> GetIssueCheque()
+        {
+
+            var resultsGroupings = _context.hc_dgoffice.GroupBy(r => new { r.release_amount, r.hf_code, r.date_entry,r.cheque_no,r.courier_date,r.courier_name,r.diary_no })
+                .Select(r => new
+                {
+                    HFCode = r.Key.hf_code,
+                    ChequeAmount = r.Key.release_amount,
+                    DateTime = r.Key.date_entry,
+                    ChequeNo= r.Key.cheque_no,
+                    CourierName=r.Key.courier_name,
+                    CourierDate=r.Key.courier_date,
+                    DairyNo=r.Key.diary_no
+
+                });
+            return Ok(resultsGroupings);
+
+            //var Yoo = data.Select(x => new { x.Id, x.LetterNo, x.Name, x.Cnic, x.DesignationAppliedFor, x.IssueDate, DivisionName = x.HealthFacility != null ? x.HealthFacility.DivisionName : "", DistrictName = x.HealthFacility != null ? x.HealthFacility.DistrictName : "", TehsilName = x.HealthFacility != null ? x.HealthFacility.TehsilName : "", x.FinalReport }).ToList();
+        }
+
+
+
+
+
+        [HttpPost]
+        [Route("HFDetailsSave")]
+        public async Task<ActionResult<IEnumerable<hc_hfAcknowledge>>> DATASAVE(hc_hfAcknowledge hc_HfAcknowledge)
+        {
+
+            _context.Add(hc_HfAcknowledge);
+            await _context.SaveChangesAsync();
+            return Ok();
+
+            //var Yoo = data.Select(x => new { x.Id, x.LetterNo, x.Name, x.Cnic, x.DesignationAppliedFor, x.IssueDate, DivisionName = x.HealthFacility != null ? x.HealthFacility.DivisionName : "", DistrictName = x.HealthFacility != null ? x.HealthFacility.DistrictName : "", TehsilName = x.HealthFacility != null ? x.HealthFacility.TehsilName : "", x.FinalReport }).ToList();
+        }
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [HttpPost]
+        [Route("HFbudget")]
+        public async Task<ActionResult<IEnumerable<hc_hfAcknowledge>>> GetHFBudget()
+        {
+
+            var result = (from hfc in _context.hc_dgoffice
+                          join abc in _context.hc_hfAcknowledge on hfc.Id equals abc.DGOffice_Id
+                          select new
+                          {
+                              HFCode = hfc.hf_code,
+                              id = hfc.Id,
+                              ChequeNo = hfc.cheque_no,
+                              CourierName = hfc.courier_name,
+                              CourierDate = hfc.courier_date,
+                              DairyNo = hfc.diary_no,
+                              ReceivedAmmount = abc.received_amount,
+                              Remarks = hfc.Remarks,
+                              Status = abc.statusId,
+                              DateTime = hfc.date_entry
+                          }).ToList();
+
+
+
+        
+
+
+            return Ok(result);
+
+
+
+            //var Yoo = data.Select(x => new { x.Id, x.LetterNo, x.Name, x.Cnic, x.DesignationAppliedFor, x.IssueDate, DivisionName = x.HealthFacility != null ? x.HealthFacility.DivisionName : "", DistrictName = x.HealthFacility != null ? x.HealthFacility.DistrictName : "", TehsilName = x.HealthFacility != null ? x.HealthFacility.TehsilName : "", x.FinalReport }).ToList();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // DELETE: api/Acknowledge/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Deletehc_hfAcknowledge(int id)
