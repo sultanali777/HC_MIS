@@ -14,11 +14,12 @@ namespace HC_MIS.Data
         public virtual DbSet<Hflist> HFList { get; set; }
         public virtual DbSet<District> Districts { get; set; }
         public DbSet<hc_dgoffice> hc_dgoffice { get; set; }
+        public virtual DbSet<DgOfficeAmountRelease> DgOfficeAmountReleases { get; set; }
         public DbSet<hc_hfAcknowledge> hc_hfAcknowledge { get; set; }
         public DbSet<hc_ackStatus> hc_ackStatus { get; set; }
         public DbSet<hc_hfbankdetails> hc_hfbankdetails { get; set; }
-     
-     
+
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -57,6 +58,25 @@ namespace HC_MIS.Data
             builder.Entity<IdentityUserToken<string>>(entity =>
             {
                 entity.ToTable("phs_UserTokens");
+            });
+
+            builder.Entity<DgOfficeAmountRelease>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("DG_Office_Amount_Release");
+
+                entity.Property(e => e.AccountStatus).HasColumnName("account_status");
+
+                entity.Property(e => e.DevelopmentReleased).HasColumnName("Development_Released");
+
+                entity.Property(e => e.DgRelease).HasColumnName("DG_Release");
+
+                entity.Property(e => e.FullName).IsRequired();
+
+                entity.Property(e => e.Hfmiscode)
+                    .IsRequired()
+                    .HasColumnName("HFMISCode");
             });
         }
     }

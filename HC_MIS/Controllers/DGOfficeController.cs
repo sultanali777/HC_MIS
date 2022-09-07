@@ -62,13 +62,19 @@ namespace HC_MIS.Controllers
             //var Yoo = data.Select(x => new { x.Id, x.LetterNo, x.Name, x.Cnic, x.DesignationAppliedFor, x.IssueDate, DivisionName = x.HealthFacility != null ? x.HealthFacility.DivisionName : "", DistrictName = x.HealthFacility != null ? x.HealthFacility.DistrictName : "", TehsilName = x.HealthFacility != null ? x.HealthFacility.TehsilName : "", x.FinalReport }).ToList();
         }
 
+        [HttpPost]
+        [Route("DGOfficeReleasedBudget")]
+        public async Task<ActionResult<IEnumerable<DgOfficeAmountRelease>>> GetDGOfficeRelease()
+        {
 
+            return await _context.DgOfficeAmountReleases.ToListAsync();
+        }
         [HttpPost]
         [Route("DGDetailsSave")]
         public async Task<ActionResult<hc_dgoffice>> DGDATASAVE(hc_dgoffice hc_Dgoffice)
         {
 
-          
+
             _context.Add(hc_Dgoffice);
             await _context.SaveChangesAsync();
 
