@@ -25,10 +25,38 @@ namespace HC_MIS.Controllers
 
         // GET: api/Development
         [HttpGet]
+        //public async Task<ActionResult<IEnumerable<hc_dev>>> Gethc_development()
+        //{
+        //    return await _context.hc_development.ToListAsync();
+
+        //}
+
         public async Task<ActionResult<IEnumerable<hc_dev>>> Gethc_development()
         {
-            return await _context.hc_development.ToListAsync();
+            List<hc_dev> hc_dev_list = new List<hc_dev>();
+
+            hc_dev_list = (from hfc in _context.HFList
+                          join abc in _context.hc_development on hfc.Hfmiscode equals abc.hf_code
+                          select new hc_dev
+                          {
+                        Id= abc.Id,
+                        user_Id = abc.user_Id,
+                        allocated_amount=abc.allocated_amount,
+                        open_balance = abc.open_balance,
+                        date_entry= abc.date_entry,
+                        hf_fullname= hfc.FullName,
+                        hf_code=abc.hf_code,
+                        file_path= abc.file_path,
+                              release_amount=abc.release_amount
+
+                          }).ToList();
+
+            return hc_dev_list;
+
         }
+
+
+
 
         // GET: api/Development/5
         [HttpGet("{id}")]

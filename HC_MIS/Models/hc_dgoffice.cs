@@ -15,7 +15,7 @@ namespace HC_MIS.Models
         public string courier_name { get; set; }
         public DateTime courier_date { get; set; }
         public string diary_no { get; set; }
-        public string IsCancelled { get; set; }
+        public bool IsCancelled { get; set; }
         public string Remarks { get; set; }
 
 

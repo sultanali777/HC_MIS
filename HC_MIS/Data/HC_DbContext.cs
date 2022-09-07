@@ -17,6 +17,10 @@ namespace HC_MIS.Data
         public DbSet<hc_hfAcknowledge> hc_hfAcknowledge { get; set; }
         public DbSet<hc_ackStatus> hc_ackStatus { get; set; }
         public DbSet<hc_hfbankdetails> hc_hfbankdetails { get; set; }
+     
+     
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

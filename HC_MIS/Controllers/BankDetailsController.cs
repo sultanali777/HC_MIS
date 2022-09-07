@@ -31,18 +31,36 @@ namespace HC_MIS.Controllers
         }
 
         // GET: api/BankDetails/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<hc_hfbankdetails>> Gethc_hfbankdetails(int id)
-        {
-            var hc_hfbankdetails = await _context.hc_hfbankdetails.FindAsync(id);
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<hc_hfbankdetails>> Gethc_hfbankdetails(int id)
+        //{
+        //    var hc_hfbankdetails = await _context.hc_hfbankdetails.FindAsync(id);
 
-            if (hc_hfbankdetails == null)
-            {
-                return NotFound();
-            }
+        //    if (hc_hfbankdetails == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return hc_hfbankdetails;
+        //}
+
+
+        // GET: api/BankDetailsByHFCode/5
+        [HttpGet("{hfCode}")]
+        public async Task<ActionResult<IEnumerable<hc_hfbankdetails>>> Gethc_hfbankdetailsbyhfcode(string hfCode)
+        {
+
+            
+            var hc_hfbankdetails = await _context.hc_hfbankdetails.Where(x => x.hf_code == hfCode).ToListAsync();
+
 
             return hc_hfbankdetails;
+ 
+
         }
+
+
+
 
         // PUT: api/BankDetails/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
