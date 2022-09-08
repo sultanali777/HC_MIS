@@ -12,7 +12,7 @@ namespace HC_MIS.Models
         public string release_amount { get; set; }
         public string file_path { get; set; }
         public string hf_code { get; set; }
-        public string hf_fullname { get; set; }
+        //public string hf_fullname { get; set; }
         public DateTime date_entry
         {
             get
