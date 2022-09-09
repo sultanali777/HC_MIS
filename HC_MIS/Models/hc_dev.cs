@@ -25,5 +25,7 @@ namespace HC_MIS.Models
             set { this.dateEntry = value; }
         }
         private DateTime? dateEntry = null;
+
+        public string financial_year { get; set; }
     }
 }

@@ -90,20 +90,26 @@ namespace HC_MIS.Controllers
         [HttpPost]
         [Route("IssueCheque")]
         public async Task<ActionResult<IEnumerable<hc_hfAcknowledge>>> GetIssueCheque()
-        {
+        { 
+            var resultsGroupings = (from _hcAck in _context.hc_hfAcknowledge
+                                    join _hcAckStatus in _context.hc_ackStatus on _hcAck.statusId  equals _hcAckStatus.Id into _hcAckGrp
+                                    from _hcAckStatuss in _hcAckGrp.DefaultIfEmpty()
+                                    join _hcDgOffice in _context.hc_dgoffice on _hcAck.DGOffice_Id equals _hcDgOffice.Id
+                                    select new
+                                    {
+                                        hckId = _hcAck.Id,
+                                        HFCode = _hcAck.hf_code,
+                                        Amount = _hcAck.received_amount,
+                                        DateTime = _hcAck.received_date,
+                                        ChequeNo = _hcAck.cheque_no,
+                                        CourierName = _hcDgOffice.courier_name,
+                                        CourierDate = _hcDgOffice.courier_date,
+                                        DairyNo = _hcDgOffice.diary_no,
+                                        Status = _hcAckStatuss.ack_description,
+                                        DGOffice_Id = _hcAck.DGOffice_Id,
 
-            var resultsGroupings = _context.hc_dgoffice.GroupBy(r => new { r.release_amount, r.hf_code, r.date_entry,r.cheque_no,r.courier_date,r.courier_name,r.diary_no })
-                .Select(r => new
-                {
-                    HFCode = r.Key.hf_code,
-                    ChequeAmount = r.Key.release_amount,
-                    DateTime = r.Key.date_entry,
-                    ChequeNo= r.Key.cheque_no,
-                    CourierName=r.Key.courier_name,
-                    CourierDate=r.Key.courier_date,
-                    DairyNo=r.Key.diary_no
+                                    }).ToList();
 
-                });
             return Ok(resultsGroupings);
 
             //var Yoo = data.Select(x => new { x.Id, x.LetterNo, x.Name, x.Cnic, x.DesignationAppliedFor, x.IssueDate, DivisionName = x.HealthFacility != null ? x.HealthFacility.DivisionName : "", DistrictName = x.HealthFacility != null ? x.HealthFacility.DistrictName : "", TehsilName = x.HealthFacility != null ? x.HealthFacility.TehsilName : "", x.FinalReport }).ToList();
@@ -112,13 +118,13 @@ namespace HC_MIS.Controllers
 
 
 
-
+        // POST: api/Acknowledge
         [HttpPost]
-        [Route("HFDetailsSave")]
-        public async Task<ActionResult<IEnumerable<hc_hfAcknowledge>>> DATASAVE(hc_hfAcknowledge hc_HfAcknowledge)
+        [Route("Update")]
+        public async Task<ActionResult<IEnumerable<hc_hfAcknowledge>>> hc_hfUpdate(hc_hfAcknowledge hc_HfAcknowledge)
         {
 
-            _context.Add(hc_HfAcknowledge);
+            _context.Update(hc_HfAcknowledge);
             await _context.SaveChangesAsync();
             return Ok();
 

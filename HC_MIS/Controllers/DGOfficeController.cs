@@ -69,6 +69,7 @@ namespace HC_MIS.Controllers
 
             return await _context.DgOfficeAmountReleases.ToListAsync();
         }
+        [AllowAnonymous]
         [HttpPost]
         [Route("DGDetailsSave")]
         public async Task<ActionResult<hc_dgoffice>> DGDATASAVE(hc_dgoffice hc_Dgoffice)
@@ -85,7 +86,7 @@ namespace HC_MIS.Controllers
             obj.cheque_no = hc_Dgoffice.cheque_no;
             obj.received_amount = hc_Dgoffice.release_amount;
             obj.DGOffice_Id = hc_Dgoffice.Id;
-
+            obj.statusId = 1; // NOt Recieevd
 
 
 

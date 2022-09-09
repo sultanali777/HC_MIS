@@ -47,7 +47,8 @@ namespace HC_MIS.Controllers
                                    hf_fullname = hfc.FullName,
                                    hf_code = abc.hf_code,
                                    file_path = abc.file_path,
-                                   release_amount = abc.release_amount
+                                   release_amount = abc.release_amount,
+                                   financial_year = abc.financial_year,
 
                                }).ToList();
 

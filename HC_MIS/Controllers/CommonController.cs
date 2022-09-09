@@ -46,6 +46,12 @@ namespace HC_MIS.Controllers
         {
             return await Context.HFList.Where(x => x.TehsilCode == code).ToListAsync();
         }
+        [HttpGet]
+        [Route("FacilitiesByCode")]
+        public async Task<ActionResult<IEnumerable<Hflist>>> FacilitiesByCode(string code)
+        {
+            return await Context.HFList.Where(x => x.Hfmiscode == code).ToListAsync();
+        }
         [HttpPost]
         [Route("FacilitiesByType")]
         public async Task<ActionResult<IEnumerable<Hflist>>> GetFacilitiesByType(string code)
