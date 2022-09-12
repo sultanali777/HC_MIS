@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HC_MIS.Data;
 using HC_MIS.Models;
 using Microsoft.AspNetCore.Authorization;
+using Org.BouncyCastle.Utilities;
 
 namespace HC_MIS.Controllers
 {
@@ -64,10 +65,37 @@ namespace HC_MIS.Controllers
 
         [HttpPost]
         [Route("DGOfficeReleasedBudget")]
-        public async Task<ActionResult<IEnumerable<DgOfficeAmountRelease>>> GetDGOfficeRelease()
+        public async Task<ActionResult<IEnumerable<DgOfficeAmountRelease>>> GetDGOfficeRelease(DataTableParameters filter)
         {
+            IQueryable<DgOfficeAmountRelease> data ;
 
-            return await _context.DgOfficeAmountReleases.ToListAsync();
+            if (!string.IsNullOrEmpty(filter.search.value))
+            {
+                data = _context.DgOfficeAmountReleases
+                    .Where(x =>
+                    x.FullName.ToLower().Contains(filter.search.value.ToLower()) ||
+                    x.DgRelease.ToString().Contains(filter.search.value) ||
+                    x.AccountStatus.Contains(filter.search.value) ||
+                    x.DevelopmentReleased.ToString().Contains(filter.search.value)
+                    ).Skip(filter.start).Take(filter.length).AsQueryable();
+            }
+
+            
+            else
+            {
+                 data = _context.DgOfficeAmountReleases.OrderBy(x => x.FullName).Skip(filter.start).Take(filter.length).AsQueryable();
+
+            }
+
+            var response = new
+            {
+                recordsFiltered = data.Count(),
+                recordsTotal = data.Count(),
+                data = data.ToArray(),
+            };
+
+            return Ok(response);
+      
         }
         [AllowAnonymous]
         [HttpPost]

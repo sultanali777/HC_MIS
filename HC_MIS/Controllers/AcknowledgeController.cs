@@ -106,6 +106,7 @@ namespace HC_MIS.Controllers
                                         CourierDate = _hcDgOffice.courier_date,
                                         DairyNo = _hcDgOffice.diary_no,
                                         Status = _hcAckStatuss.ack_description,
+                                        StatusId = _hcAckStatuss.Id,
                                         DGOffice_Id = _hcAck.DGOffice_Id,
 
                                     }).ToList();
