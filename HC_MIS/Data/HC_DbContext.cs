@@ -18,6 +18,11 @@ namespace HC_MIS.Data
         public DbSet<hc_hfAcknowledge> hc_hfAcknowledge { get; set; }
         public DbSet<hc_ackStatus> hc_ackStatus { get; set; }
         public DbSet<hc_hfbankdetails> hc_hfbankdetails { get; set; }
+        public DbSet<hc_meetingdetails> hc_meetingdetails { get; set; }
+        public DbSet<hc_meetingmember> hc_meetingmember { get; set; }
+
+
+
 
 
 
